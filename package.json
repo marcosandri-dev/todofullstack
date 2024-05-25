@@ -1,0 +1,15 @@
+{
+  "name": "todofullstack",
+  "version": "0.1.0",
+  "description": "A quick Todolist app done with React and Node to refresh my knowledge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Marco Sandri",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ]
+}
