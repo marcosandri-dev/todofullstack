@@ -1,21 +1,15 @@
-import TodoMessage from "../TodoMessage/todoMessage";
-import { Todo } from '@shared/types';
+import TodoListHeader from "../TodoListHeader/TodoListHeader";
+import TodoListTasks from "../TodoListTasks/TodoListTasks";
 
-interface TodoListProps {
-  todos: Todo[];
-}
+interface TodoListProps {}
 
-const TodoList: React.FC<TodoListProps> = ({ todos }) => {
-
+const TodoList: React.FC<TodoListProps> = () => {
   return (
     <div>
-      {todos?.length ? (
-        todos.map((todo) => <TodoMessage key={todo.id}>{todo.message}</TodoMessage>)
-      ) : (
-        <div>Loading...</div>
-      )}
+      <TodoListHeader />
+      <TodoListTasks />
     </div>
   );
-}
+};
 
 export default TodoList;
