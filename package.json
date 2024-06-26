@@ -1,10 +1,10 @@
 {
   "name": "todofullstack",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A quick Todolist app done with React and Node to refresh my knowledge.",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\" ",
     "start-frontend": "npm run start --prefix ./packages/frontend",
     "start-backend": "npm run start --prefix ./packages/backend",
     "start-tailwind": "npm run start-tailwind --prefix ./packages/frontend",

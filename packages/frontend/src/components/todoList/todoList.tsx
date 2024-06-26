@@ -5,7 +5,7 @@ interface TodoListProps {}
 
 const TodoList: React.FC<TodoListProps> = () => {
   return (
-    <div>
+    <div className="container mx-auto">
       <TodoListHeader />
       <TodoListTasks />
     </div>

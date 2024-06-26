@@ -1,4 +1,4 @@
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect, useRef } from "react";
 import { fetchData } from "../../store/todosSlice";
@@ -21,13 +21,17 @@ const TodoListTasks: React.FC<TodoListTasksProps> = () => {
 
   return (
     <div>
-      {todos?.length ? (
-        todos.map((todo) => (
-          <TodoMessage key={todo.id} todo={todo}></TodoMessage>
-        ))
-      ) : (
-        <div>Loading...</div>
-      )}
+      <ul role="list" className="divide-y divide-gray-100">
+        {todos?.length ? (
+          todos.map((todo) => (
+            <li className="flex justify-between gap-x-6 py-5">
+              <TodoMessage key={todo.id} todo={todo}></TodoMessage>
+            </li>
+          ))
+        ) : (
+          <div>Loading...</div>
+        )}
+      </ul>
       <NewTaskButton />
     </div>
   );
