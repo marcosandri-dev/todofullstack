@@ -1,8 +1,8 @@
-import { Todo } from "@shared/types";
+import { TodoList } from "@shared/types";
 
-const apiUrl = "http://localhost:5000/todos";
+const apiUrl = "http://localhost:5000/todoList";
 
-export const fetchTodos = async (): Promise<Todo[]> => {
+export const fetchTodoLists = async (): Promise<TodoList[]> => {
   // Check documentazione fetch
   const response = await fetch(apiUrl);
   if (!response.ok) {

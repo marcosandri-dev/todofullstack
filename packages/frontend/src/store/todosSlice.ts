@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchTodos } from "../api/topoApi";
+import { fetchTodoLists } from "../api/todoApi";
 import { Todo } from "@shared/types";
 
 const initialState: Todo[] = [];
 
+// Is there a better method?
 export const fetchData = createAsyncThunk(
-  "todos/getTodos",
+  "todoList/todoLists",
   async (_, { dispatch }) => {
-    const todos = await fetchTodos();
-    dispatch(todosAdd(todos));
-    return todos;
+    const todoLists = await fetchTodoLists();
+    dispatch(todosAdd(todoLists[0].todos));
+    return todoLists;
   }
 );
 
