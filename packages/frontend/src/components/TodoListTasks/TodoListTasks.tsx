@@ -3,7 +3,8 @@ import { AppDispatch, RootState } from "../../store/store";
 import { useEffect, useRef } from "react";
 import { fetchData } from "../../store/todosSlice";
 import TodoMessage from "../TodoTask/todoTask";
-import NewTaskButton from "../NewTaskButton/NewTaskButton";
+import EditIcon from "../Common/EditIcon";
+import DeleteIcon from "../Common/DeleteIcon";
 
 interface TodoListTasksProps {}
 
@@ -20,20 +21,25 @@ const TodoListTasks: React.FC<TodoListTasksProps> = () => {
   }, [dispatch, todos]);
 
   return (
-    <div>
-      <ul role="list" className="divide-y divide-gray-100">
-        {todos?.length ? (
-          todos.map((todo) => (
-            <li className="flex justify-between gap-x-6 py-5">
-              <TodoMessage key={todo.id} todo={todo}></TodoMessage>
-            </li>
-          ))
-        ) : (
-          <div>Loading...</div>
-        )}
-      </ul>
-      <NewTaskButton />
-    </div>
+    <ul role="list" className="divide-y divide-gray-100">
+      {hasFetchedData.current ? (
+        todos.map((todo) => (
+          <li className="flex justify-between p-2" key={todo.id}>
+            <TodoMessage todo={todo}></TodoMessage>
+            <div className="flex space-x-2">
+              <button className="text-white bg-blue-500 p-0.5 rounded">
+                <EditIcon />
+              </button>
+              <button className="text-white bg-red-500 p-0.5 rounded">
+                <DeleteIcon />
+              </button>
+            </div>
+          </li>
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
+    </ul>
   );
 };
 

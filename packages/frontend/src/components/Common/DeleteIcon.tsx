@@ -10,7 +10,7 @@ const DeleteIcon: React.FC<DeleteIconProps> = ({ className = "" }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`w-6 h-6 text-white bg-red-500 p-0.5 rounded ${className}`}
+      className={`size-6 ${className}`}
     >
       <path
         strokeLinecap="round"
