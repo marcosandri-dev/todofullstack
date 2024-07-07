@@ -1,6 +1,6 @@
 {
   "name": "todofullstack",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A quick Todolist app done with React and Node to refresh my knowledge.",
   "main": "index.js",
   "scripts": {
