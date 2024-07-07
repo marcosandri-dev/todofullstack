@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { TodoList } from "@shared/types";
+import { Todo, TodoList } from "@shared/types";
 
 const app = express();
 app.use(cors());
@@ -37,6 +37,14 @@ const todoLists: TodoList[] = [
 
 app.get("/todoList", (req: Request, res: Response) => {
   res.json(todoLists);
+});
+
+app.post("/todos", (req: Request, res: Response) => {
+  const newTodo: Todo = req.body.todo;
+
+  todoLists[0].todos.push(newTodo);
+
+  res.status(201).json(newTodo);
 });
 
 app.listen(PORT, () => {
