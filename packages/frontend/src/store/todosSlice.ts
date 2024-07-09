@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchTodoLists, postTodo } from "../api/todoApi";
+import { deleteTodo, fetchTodoLists, postTodo } from "../api/todoApiService";
 import { Todo } from "@shared/types";
 
 const initialState: Todo[] = [];
@@ -31,6 +31,19 @@ export const addTodo = createAsyncThunk(
   }
 );
 
+export const eraseTodo = createAsyncThunk(
+  "todos/deleteTodo",
+  async (todoMessage: string, { rejectWithValue }) => {
+    try {
+      const erasedTodo = await deleteTodo(todoMessage);
+
+      return erasedTodo.id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const todosSlice = createSlice({
   name: "todos",
   initialState,
@@ -47,7 +60,16 @@ const todosSlice = createSlice({
       state.push(action.payload);
     });
     builder.addCase(addTodo.rejected, (state, action) => {
-      console.error(action.payload); // Gestisci l'errore
+      console.error(action.payload); // Manage error (toaster)
+    });
+    builder.addCase(
+      eraseTodo.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        return state.filter((todo) => todo.id !== action.payload);
+      }
+    );
+    builder.addCase(eraseTodo.rejected, (state, action) => {
+      console.error(action.payload); // Manage error (toaster)
     });
   },
 });
