@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import { v4 as uuidv4 } from "uuid";
 import { Todo, TodoList } from "@shared/types";
 
 const app = express();
@@ -16,7 +17,7 @@ const todoLists: TodoList[] = [
     dateCreation: new Date("2024-01-01T00:00:00Z"),
     todos: [
       {
-        id: "123",
+        id: uuidv4(),
         todoListID: "1",
         message: "TEST 1",
         dateCreation: new Date("2024-01-02T00:00:00Z"),
@@ -24,7 +25,7 @@ const todoLists: TodoList[] = [
         archived: false,
       },
       {
-        id: "432",
+        id: uuidv4(),
         todoListID: "1",
         message: "TEST 2",
         dateCreation: new Date("2024-01-03T00:00:00Z"),
@@ -40,11 +41,24 @@ app.get("/todoList", (req: Request, res: Response) => {
 });
 
 app.post("/todos", (req: Request, res: Response) => {
-  const newTodo: Todo = req.body.todo;
+  const newTodo: Todo = { ...req.body.todo, id: uuidv4() };
 
   todoLists[0].todos.push(newTodo);
 
   res.status(201).json(newTodo);
+});
+
+app.delete("/todos/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const todoIndex = todoLists[0].todos.findIndex((todo) => todo.id === id);
+  if (todoIndex === -1) {
+    return res.status(404).json({ error: "Todo not found" });
+  }
+
+  const deletedTodo = todoLists[0].todos.splice(todoIndex, 1);
+
+  res.status(200).json(deletedTodo[0]);
 });
 
 app.listen(PORT, () => {

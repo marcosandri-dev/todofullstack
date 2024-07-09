@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect, useRef } from "react";
-import { fetchData } from "../../store/todosSlice";
+import { eraseTodo, fetchData } from "../../store/todosSlice";
 import TodoMessage from "../TodoMessage/todoMessage";
 import EditIcon from "../Common/EditIcon";
 import DeleteIcon from "../Common/DeleteIcon";
@@ -25,6 +25,10 @@ const TodoListMessages: React.FC<TodoListMessagesProps> = ({
     }
   }, [dispatch, todos]);
 
+  const deleteTodo = (todoID: string) => {
+    dispatch(eraseTodo(todoID));
+  };
+
   return hasFetchedData.current ? (
     <ul className="divide-y divide-gray-100">
       {todos.map((todo) => (
@@ -35,7 +39,7 @@ const TodoListMessages: React.FC<TodoListMessagesProps> = ({
               <EditIcon />
             </button>
             <button className="text-white bg-red-500 p-0.5 rounded">
-              <DeleteIcon />
+              <DeleteIcon onClick={() => deleteTodo(todo.id)} />
             </button>
           </div>
         </li>

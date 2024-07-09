@@ -13,9 +13,9 @@ export const fetchTodoLists = async (): Promise<TodoList[]> => {
 
 // This will be trasformed for the todoList, actually
 export const postTodo = async (todoMessage: string): Promise<Todo> => {
-  // add validation library
+  // add validation library + Todo send type
   const todo: Todo = {
-    id: `${Math.random()}${new Date()}`,
+    id: "0",
     todoListID: "1",
     message: todoMessage,
     dateCreation: new Date(),
@@ -32,7 +32,22 @@ export const postTodo = async (todoMessage: string): Promise<Todo> => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch todos");
+    throw new Error("Failed to add todo");
+  }
+
+  return response.json();
+};
+
+export const deleteTodo = async (todoID: string): Promise<Todo> => {
+  const response = await fetch(`${apiUrl}/todos/${todoID}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete todo");
   }
 
   return response.json();
