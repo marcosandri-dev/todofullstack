@@ -95,6 +95,8 @@ const todosSlice = createSlice({
         const index = state.findIndex((todo) => todo.id === action.payload.id);
         if (index !== -1) {
           state[index] = action.payload;
+        } else {
+          console.log("TODO NOT FOUND"); // Manage error (toaster)
         }
       }
     );

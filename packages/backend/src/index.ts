@@ -52,6 +52,7 @@ app.delete("/todos/:id", (req: Request, res: Response) => {
   const { id } = req.params;
   const todos = todoLists[0].todos;
 
+  // Export function validation
   const todoIndex = todos.findIndex((todo) => todo.id === id);
   if (todoIndex === -1) {
     return res.status(404).json({ error: "Todo not found" });
@@ -67,6 +68,7 @@ app.put("/todos/:id", (req: Request, res: Response) => {
   const todoUpdates = req.body.todoBodyUpdate;
   const todos = todoLists[0].todos;
 
+  // Export function validation
   const todoIndex = todos.findIndex((todo) => todo.id === id);
   if (todoIndex === -1) {
     return res.status(404).json({ error: "Todo not found" });
