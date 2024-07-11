@@ -1,6 +1,8 @@
+import { TodoInputType } from "../../types";
+
 interface NewTaskButtonProps {
-  setTodoInputOpen: (todoInputOpen: boolean) => void;
-  todoInputOpen: boolean;
+  setTodoInputOpen: (todoInputOpen: TodoInputType) => void;
+  todoInputOpen: TodoInputType;
 }
 
 const NewTaskButton: React.FC<NewTaskButtonProps> = ({
@@ -11,9 +13,15 @@ const NewTaskButton: React.FC<NewTaskButtonProps> = ({
     <button
       type="button"
       className="bg-blue-500 text-white p-2 rounded -mt-2"
-      onClick={() => setTodoInputOpen(!todoInputOpen)}
+      onClick={() =>
+        setTodoInputOpen(
+          todoInputOpen !== TodoInputType.CREATE
+            ? TodoInputType.CREATE
+            : TodoInputType.NONE
+        )
+      }
     >
-      {todoInputOpen ? "Cancel New task" : "New task"}
+      {todoInputOpen === TodoInputType.CREATE ? "Cancel New task" : "New task"}
     </button>
   );
 };

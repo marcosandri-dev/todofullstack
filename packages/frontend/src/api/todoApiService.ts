@@ -1,4 +1,4 @@
-import { Todo, TodoList } from "@shared/types";
+import { Todo, TodoList, TodoUpdatePartial } from "@shared/types";
 
 const apiUrl = "http://localhost:5000";
 
@@ -44,6 +44,22 @@ export const deleteTodo = async (todoID: string): Promise<Todo> => {
     headers: {
       "Content-Type": "application/json",
     },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete todo");
+  }
+
+  return response.json();
+};
+
+export const updateTodo = async (todoBodyUpdate: TodoUpdatePartial) => {
+  const response = await fetch(`${apiUrl}/todos/${todoBodyUpdate.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ todoBodyUpdate }),
   });
 
   if (!response.ok) {
