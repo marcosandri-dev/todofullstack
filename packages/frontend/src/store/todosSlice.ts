@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteTodo, fetchTodoLists, postTodo } from "../api/todoApiService";
-import { Todo } from "@shared/types";
+import {
+  deleteTodo,
+  fetchTodoLists,
+  postTodo,
+  updateTodo,
+} from "../api/todoApiService";
+import { Todo, TodoUpdatePartial } from "@shared/types";
 
 const initialState: Todo[] = [];
 
@@ -33,11 +38,24 @@ export const addTodo = createAsyncThunk(
 
 export const eraseTodo = createAsyncThunk(
   "todos/deleteTodo",
-  async (todoMessage: string, { rejectWithValue }) => {
+  async (todoID: string, { rejectWithValue }) => {
     try {
-      const erasedTodo = await deleteTodo(todoMessage);
+      const erasedTodo = await deleteTodo(todoID);
 
       return erasedTodo.id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const editTodo = createAsyncThunk(
+  "todos/updateTodo",
+  async (todoBodyUpdate: TodoUpdatePartial, { rejectWithValue }) => {
+    try {
+      const editedTodo = await updateTodo(todoBodyUpdate);
+
+      return editedTodo;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -69,6 +87,18 @@ const todosSlice = createSlice({
       }
     );
     builder.addCase(eraseTodo.rejected, (state, action) => {
+      console.error(action.payload); // Manage error (toaster)
+    });
+    builder.addCase(
+      editTodo.fulfilled,
+      (state, action: PayloadAction<Todo>) => {
+        const index = state.findIndex((todo) => todo.id === action.payload.id);
+        if (index !== -1) {
+          state[index] = action.payload;
+        }
+      }
+    );
+    builder.addCase(editTodo.rejected, (state, action) => {
       console.error(action.payload); // Manage error (toaster)
     });
   },

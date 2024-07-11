@@ -50,8 +50,9 @@ app.post("/todos", (req: Request, res: Response) => {
 
 app.delete("/todos/:id", (req: Request, res: Response) => {
   const { id } = req.params;
+  const todos = todoLists[0].todos;
 
-  const todoIndex = todoLists[0].todos.findIndex((todo) => todo.id === id);
+  const todoIndex = todos.findIndex((todo) => todo.id === id);
   if (todoIndex === -1) {
     return res.status(404).json({ error: "Todo not found" });
   }
@@ -59,6 +60,23 @@ app.delete("/todos/:id", (req: Request, res: Response) => {
   const deletedTodo = todoLists[0].todos.splice(todoIndex, 1);
 
   res.status(200).json(deletedTodo[0]);
+});
+
+app.put("/todos/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const todoUpdates = req.body.todoBodyUpdate;
+  const todos = todoLists[0].todos;
+
+  const todoIndex = todos.findIndex((todo) => todo.id === id);
+  if (todoIndex === -1) {
+    return res.status(404).json({ error: "Todo not found" });
+  }
+
+  todos[todoIndex] = { ...todos[todoIndex], ...todoUpdates };
+
+  const updatedTodo = todos[todoIndex];
+
+  res.status(200).json(updatedTodo);
 });
 
 app.listen(PORT, () => {

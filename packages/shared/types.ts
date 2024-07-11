@@ -7,6 +7,10 @@ export interface Todo {
   dateCreation: Date;
 }
 
+export type TodoUpdatePartial = Partial<
+  Pick<Todo, "id" | "message" | "done" | "archived">
+>;
+
 export interface TodoList {
   id: string;
   todos: Todo[];
