@@ -1,9 +1,8 @@
 interface EditIconProps {
   className?: string;
-  onClick?: () => void;
 }
 
-const EditIcon: React.FC<EditIconProps> = ({ className = "", onClick }) => {
+const EditIcon: React.FC<EditIconProps> = ({ className = "" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +11,6 @@ const EditIcon: React.FC<EditIconProps> = ({ className = "", onClick }) => {
       strokeWidth="1.5"
       stroke="currentColor"
       className={`size-6 ${className}`}
-      onClick={onClick}
     >
       <path
         strokeLinecap="round"

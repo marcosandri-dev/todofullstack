@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect, useRef, useState } from "react";
-import { eraseTodo, fetchData } from "../../store/todosSlice";
+import { editTodo, eraseTodo, fetchData } from "../../store/todosSlice";
 import TodoMessage from "../TodoMessage/todoMessage";
 import EditIcon from "../Common/EditIcon";
 import DeleteIcon from "../Common/DeleteIcon";
@@ -30,11 +30,13 @@ const TodoListMessages: React.FC<TodoListMessagesProps> = ({
     }
   }, [dispatch, todos]);
 
-  const deleteTodo = (todoID: string) => {
+  const deleteTodo = (e: React.MouseEvent, todoID: string) => {
+    e.stopPropagation();
     dispatch(eraseTodo(todoID));
   };
 
-  const openEdit = (todoID: string) => {
+  const openEdit = (e: React.MouseEvent, todoID: string) => {
+    e.stopPropagation();
     setEditKey(todoID);
     setTodoInputOpen(TodoInputType.EDIT);
   };
@@ -43,7 +45,7 @@ const TodoListMessages: React.FC<TodoListMessagesProps> = ({
     <ul className="divide-y divide-gray-100">
       {todos.map((todo) =>
         todoInputOpen === TodoInputType.EDIT && editKey === todo.id ? (
-          <li className="flex justify-between px-2" key={todo.id}>
+          <li className="flex justify-between p-2" key={todo.id}>
             <TodoCreationForm
               setTodoInputOpen={setTodoInputOpen}
               todoInputOpen={todoInputOpen}
@@ -51,21 +53,36 @@ const TodoListMessages: React.FC<TodoListMessagesProps> = ({
             />
           </li>
         ) : (
-          <li className="flex justify-between p-2" key={todo.id}>
+          <li
+            className="flex justify-between p-2 cursor-pointer hover:bg-slate-200"
+            key={todo.id}
+            onClick={() =>
+              dispatch(editTodo({ id: todo.id, done: !todo.done }))
+            }
+          >
             <TodoMessage todo={todo} />
             <div className="flex space-x-2">
-              <button className="text-white bg-blue-500 p-0.5 rounded">
-                <EditIcon onClick={() => openEdit(todo.id)} />
-              </button>
-              <button className="text-white bg-red-500 p-0.5 rounded">
-                <DeleteIcon onClick={() => deleteTodo(todo.id)} />
-              </button>
+              {!todo.done ? (
+                <button
+                  onClick={(e) => openEdit(e, todo.id)}
+                  className="text-white bg-blue-500 hover:bg-blue-400 p-0.5 rounded"
+                >
+                  <EditIcon />
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => deleteTodo(e, todo.id)}
+                  className="text-white bg-red-500 hover:bg-red-400 p-0.5 rounded"
+                >
+                  <DeleteIcon />
+                </button>
+              )}
             </div>
           </li>
         )
       )}
       {todoInputOpen === TodoInputType.CREATE && (
-        <li className="flex justify-between px-2 pb-4">
+        <li className="flex justify-between p-2 pb-4">
           <TodoCreationForm todoInputOpen={todoInputOpen} />
         </li>
       )}

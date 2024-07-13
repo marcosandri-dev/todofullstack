@@ -51,7 +51,7 @@ const TodoCreationForm: React.FC<TodoCreationFormProps> = ({
       />
       <button
         type="submit"
-        className={`rounded bg-emerald-500 p-2 ${
+        className={`rounded bg-emerald-500 hover:bg-emerald-400 p-2 ${
           todoInputOpen === TodoInputType.CREATE ? "px-2.5" : "px-4"
         } text-white `}
       >
