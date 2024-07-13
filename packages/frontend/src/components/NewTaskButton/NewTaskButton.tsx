@@ -12,7 +12,7 @@ const NewTaskButton: React.FC<NewTaskButtonProps> = ({
   return (
     <button
       type="button"
-      className="bg-blue-500 text-white p-2 rounded -mt-2"
+      className="bg-blue-500 text-white p-2 rounded -mt-2 hover:bg-blue-400"
       onClick={() =>
         setTodoInputOpen(
           todoInputOpen !== TodoInputType.CREATE

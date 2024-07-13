@@ -1,9 +1,8 @@
 interface DeleteIconProps {
   className?: string;
-  onClick?: () => void;
 }
 
-const DeleteIcon: React.FC<DeleteIconProps> = ({ className = "", onClick }) => {
+const DeleteIcon: React.FC<DeleteIconProps> = ({ className = "" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +11,6 @@ const DeleteIcon: React.FC<DeleteIconProps> = ({ className = "", onClick }) => {
       strokeWidth={1.5}
       stroke="currentColor"
       className={`size-6 ${className}`}
-      onClick={onClick}
     >
       <path
         strokeLinecap="round"

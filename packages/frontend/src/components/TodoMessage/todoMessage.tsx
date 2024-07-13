@@ -5,7 +5,9 @@ interface TodoMessageProps {
 }
 
 const TodoMessage: React.FC<TodoMessageProps> = ({ todo }) => {
-  return <span>{todo.message}</span>;
+  return (
+    <span className={todo.done ? "line-through" : ""}>{todo.message}</span>
+  );
 };
 
 export default TodoMessage;
