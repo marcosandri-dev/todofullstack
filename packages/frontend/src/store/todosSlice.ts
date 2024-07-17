@@ -7,6 +7,8 @@ import {
 } from "../api/todoApiService";
 import { Todo, TodoUpdatePartial } from "@shared/types";
 
+// I must recreate all of this part.
+// Must divide Todolist and Todos in separate tables and do the job as it's planned!
 const initialState: Todo[] = [];
 
 // Is there a better method?
