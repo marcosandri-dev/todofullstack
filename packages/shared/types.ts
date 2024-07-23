@@ -13,7 +13,6 @@ export type TodoUpdatePartial = Partial<
 
 export interface TodoList {
   id: string;
-  todos: Todo[];
   name: string;
   dateCreation: Date;
 }

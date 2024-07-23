@@ -1,24 +1,27 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  isRejectedWithValue,
+} from "@reduxjs/toolkit";
 import {
   deleteTodo,
   fetchTodoLists,
+  fetchTodos,
   postTodo,
   updateTodo,
 } from "../api/todoApiService";
 import { Todo, TodoUpdatePartial } from "@shared/types";
 
-// I must recreate all of this part.
-// Must divide Todolist and Todos in separate tables and do the job as it's planned!
 const initialState: Todo[] = [];
 
-// Is there a better method?
-export const fetchData = createAsyncThunk(
-  "todoList/fetchTodoLists",
+export const getTodos = createAsyncThunk(
+  "todos/fetchTodos",
   async (_, { rejectWithValue }) => {
     try {
-      const todoLists = await fetchTodoLists();
+      const todos = await fetchTodos();
 
-      return todoLists[0].todos;
+      return todos;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -71,7 +74,7 @@ const todosSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(
-      fetchData.fulfilled,
+      getTodos.fulfilled,
       (state, action: PayloadAction<Todo[]>) => {
         state.push(...action.payload);
       }
