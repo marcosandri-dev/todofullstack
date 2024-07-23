@@ -6,6 +6,14 @@ export const fetchTodoLists = async (): Promise<TodoList[]> => {
   // Check documentazione fetch
   const response = await fetch(`${apiUrl}/todoList`);
   if (!response.ok) {
+    throw new Error("Failed to fetch todolists");
+  }
+  return response.json();
+};
+
+export const fetchTodos = async (): Promise<Todo[]> => {
+  const response = await fetch(`${apiUrl}/todos`);
+  if (!response.ok) {
     throw new Error("Failed to fetch todos");
   }
   return response.json();
